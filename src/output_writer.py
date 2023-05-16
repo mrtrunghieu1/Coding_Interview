@@ -1,10 +1,7 @@
-# Standard lib
 import os
 import json
-# Third party
 import numpy as np
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-# Local
 from utils import check_dir_exists
 
 

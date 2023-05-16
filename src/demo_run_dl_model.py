@@ -1,11 +1,7 @@
-# Standard lib
 import os
 import datetime
 import sys
-# Third party
 import pandas as pd
-
-# Local
 from data_preprocessing import preprocess_data, create_date_features, scale_data, split_data
 from data_helper import result_path, dataset_name, file_list, features_path
 from lstm_model import build_lstm_model

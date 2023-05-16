@@ -1,12 +1,7 @@
-# Standard lib
 import os
-
-# Third party
 import pandas as pd
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
-
-# Local
 from data_helper import EPOCHS, BATCH_SIZE
 
 
