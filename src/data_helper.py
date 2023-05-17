@@ -4,7 +4,7 @@ import os
 root_path = r'C:\Users\Admin\Desktop\Code\Coding_Interview'
 
 # The list of files
-file_list = ['date_smedebtsu.csv', 'lag_smedebtsu.csv']
+file_list = ['date_smedebtsu.csv', 'lag_2_smedebtsu.csv', 'lag_4_smedebtsu.csv']
 
 features_path = os.path.join(root_path, 'data/features')
 data_path = os.path.join(root_path, 'data/processed/processed_smedebtsu.csv')

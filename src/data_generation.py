@@ -2,7 +2,8 @@ import os
 import pandas as pd
 from utils import check_dir_exists
 from data_helper import data_path, features_path
-from data_preprocessing import preprocess_tsdata, create_date_features, create_lagged_features
+from data_preprocessing import preprocess_tsdata, create_date_features
+from data_preprocessing import create_lagged_2_features, create_lagged_4_features
 
 import warnings
 
@@ -27,10 +28,18 @@ def main():
 
     # Generate a new dataset with lagged features ['total_debts_lag1', 'total_debts_lag2']
     debt_df = df.copy()
-    debt_df = create_lagged_features(debt_df)
-    debt_df.to_csv(os.path.join(features_path, 'lag_smedebtsu.csv'))
+    debt_df = create_lagged_2_features(debt_df)
+    debt_df.to_csv(os.path.join(features_path, 'lag_2_smedebtsu.csv'))
     print("File saved successfully!")
-    print("File path: ", os.path.join(features_path, 'lag_smedebtsu.csv'))
+    print("File path: ", os.path.join(features_path, 'lag_2_smedebtsu.csv'))
+
+    # Generate a new dataset with new features ['total_debts_lag1', 'total_debts_lag2',
+    #                                           'total_debts_lag3', 'total_debts_lag4']
+    date_df = df.copy()
+    date_df = create_lagged_4_features(date_df)
+    date_df.to_csv(os.path.join(features_path, 'lag_4_smedebtsu.csv'))
+    print("File saved successfully!")
+    print("File path: ", os.path.join(features_path, 'lag_4_smedebtsu.csv'))
 
     return date_df, debt_df
 

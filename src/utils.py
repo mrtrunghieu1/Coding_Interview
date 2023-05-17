@@ -1,7 +1,8 @@
 import os
 import glob
 import json
-from data_helper import name_metrics
+import itertools
+from data_helper import name_metrics, boundary_idx_test
 
 
 def check_dir_exists(dir_path):
@@ -16,29 +17,26 @@ def compute_mean_metric(metrics_list, n_cv_folds, method="RMSE"):
     return mean_metric
 
 
-def get_metric_files(result_path):
-    rmse_benchmark = {
-        'dataset': [],
-        'LSTM': [],
-        'linear_regression': [],
-        'xgboost_regressor': [],
-        'light_GBM': [],
-        'random_forest_regressor': []
-    }
+def get_y_train(df):
+    data_train = df[df.index < boundary_idx_test]
+    y_all_train = data_train['total_debts'].tolist()
+    return y_all_train
 
-    for dataset in os.listdir(result_path):
-        dataset_path = os.path.join(result_path, dataset)
-        for model_dir in os.listdir(dataset_path):
-            file_path = os.path.join(dataset_path, model_dir, 'average_results.json')
-            with open(file_path) as f:
-                data = json.load(f)
-                if model_dir == 'DL_models':
-                    rmse_benchmark['dataset'].append(data['dataset'])
-                    rmse_benchmark['LSTM'].append(data['RMSE'])
-                elif model_dir == 'ML_regression_models':
-                    for element in data:
-                        model_name = element["model"]
-                        if model_name in rmse_benchmark:
-                            rmse_benchmark[model_name].append(element['mean_RMSE'])
 
-    return rmse_benchmark
+def flatten_list(lst):
+    """
+    Flattens a nested list into a single-level list.
+
+    Parameters:
+        lst (list): The nested list to be flattened.
+
+    Returns:
+        list: A flattened version of the input nested list.
+
+    Example:
+        #>>> nested_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        #>>> flattened_list = flatten_list(nested_list)
+        #>>> print(flattened_list)
+        [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    """
+    return list(itertools.chain(*lst))

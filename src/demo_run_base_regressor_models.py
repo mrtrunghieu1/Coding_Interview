@@ -1,7 +1,6 @@
 import os
 import datetime
 import sys
-import itertools
 import numpy as np
 import pandas as pd
 import xgboost as xgb
@@ -15,7 +14,7 @@ from data_helper import features_path, result_path, dataset_name, file_list
 from data_helper import N_SPLITS, MAX_TRAIN_SIZE, TEST_SIZE, NUM_OF_TEST
 from data_preprocessing import preprocess_data
 from output_writer import OutputWriter
-from utils import compute_mean_metric
+from utils import compute_mean_metric, get_y_train, flatten_list
 
 import warnings
 
@@ -118,6 +117,8 @@ def main():
             mean_r2 = compute_mean_metric(metrics_list, N_SPLITS, method="R2_score")
 
             # ---------------------------- Writing Output -----------------------------------------
+            # it is convenient for data visualization
+            all_train = get_y_train(df)
             final_output = {
                 "dataset": file_name.split('.')[0],
                 "K_folds": N_SPLITS,
@@ -127,8 +128,9 @@ def main():
                 "mean_MSE": mean_mse,
                 "mean_RMSE": mean_rmse,
                 "mean_R2_score": mean_r2,
-                "test": list(itertools.chain(*ml_test_dict[name_regressor])), # convert 2d to 1d
-                "prediction": list(itertools.chain(*ml_prediction_dict[name_regressor]))
+                "train": all_train,
+                "test": flatten_list(ml_test_dict[name_regressor]),
+                "prediction": flatten_list(ml_prediction_dict[name_regressor])
             }
             final_output_list.append(final_output)
             rmse_benchmark.update({name_regressor: mean_rmse})

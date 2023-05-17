@@ -9,3 +9,4 @@ seaborn==0.12.2
 statsmodels
 pmdarima==2.0.3
 openpyxl==3.1.2
+Orange3==3.25.0

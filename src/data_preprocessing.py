@@ -44,10 +44,22 @@ def create_date_features(data_frame):
     return data_frame
 
 
-def create_lagged_features(data_frame):
+def create_lagged_2_features(data_frame):
     # Create lagged features
     data_frame['total_debts_lag1'] = data_frame['total_debts'].shift(1)
     data_frame['total_debts_lag2'] = data_frame['total_debts'].shift(2)
+
+    # Drop rows with missing values
+    data_frame = data_frame.dropna()
+    return data_frame
+
+
+def create_lagged_4_features(data_frame):
+    # Create lagged features
+    data_frame['total_debts_lag1'] = data_frame['total_debts'].shift(1)
+    data_frame['total_debts_lag2'] = data_frame['total_debts'].shift(2)
+    data_frame['total_debts_lag3'] = data_frame['total_debts'].shift(3)
+    data_frame['total_debts_lag4'] = data_frame['total_debts'].shift(4)
 
     # Drop rows with missing values
     data_frame = data_frame.dropna()
@@ -80,7 +92,7 @@ def split_data(dataframe, X_scaler, y_scaler):
 
     Returns:
     """
-    # Find the index of the first timestamp that is greater than or equal to boundary_idx_test("24-02-2023")
+    # Find the index of the first timestamp that is greater than or equal to boundary_idx_test("'2020-12-10'")
     dates = dataframe.index
     boundary_idx = dataframe.index.searchsorted(pd.Timestamp(boundary_idx_test))
     # Split the data into training/validation and test sets

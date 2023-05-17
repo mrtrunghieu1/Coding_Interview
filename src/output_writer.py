@@ -2,7 +2,7 @@ import os
 import json
 import numpy as np
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from utils import check_dir_exists
+from utils import check_dir_exists, flatten_list
 
 
 class OutputWriter:
@@ -33,7 +33,7 @@ class OutputWriter:
         info_file = os.path.join(self.fold_dir, "average_results.json")
         self.write_output(final_output, info_file, indent=indent)
 
-    def write_output_DL_results(self, ground_truth, predictions, model_name, indent=None):
+    def write_output_dl_results(self, y_train, y_val, ground_truth, predictions, model_name, indent=None):
         data = {
             "dataset": self.dataset_name,
             "model": model_name,
@@ -44,8 +44,10 @@ class OutputWriter:
             "MSE": mean_squared_error(ground_truth, predictions),
             "RMSE": np.sqrt(mean_squared_error(ground_truth, predictions)),
             "R2_score": r2_score(ground_truth, predictions),
-            "target": np.ravel(ground_truth).tolist(),
-            "predictions": np.ravel(predictions).tolist()
+            "test": np.ravel(ground_truth).tolist(),
+            "prediction": np.ravel(predictions).tolist(),
+            "train": flatten_list(y_train),
+            "val": flatten_list(y_val),
         }
 
         dir_path = os.path.join(self.results_dir, self.dataset_name, "DL_models")

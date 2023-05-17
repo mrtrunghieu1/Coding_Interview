@@ -45,11 +45,20 @@ def main():
         model = build_lstm_model(X_train, y_train, X_val, y_val)
         print("Testing model")
         ytest_unscaled_prediction = model.predict(X_test)
+
+        # Inverse transform
         ytest_prediction = scaler.inverse_transform(ytest_unscaled_prediction)
         ytest_ground_truth = scaler.inverse_transform(y_test)
+        y_train = scaler.inverse_transform(y_train)
+        y_val = scaler.inverse_transform(y_val)
 
         # Write output
-        output_writer.write_output_DL_results(ytest_ground_truth, ytest_prediction, model_name="LSTM", indent=2)
+        output_writer.write_output_dl_results(y_train=y_train,
+                                              y_val=y_val,
+                                              ground_truth=ytest_ground_truth,
+                                              predictions=ytest_prediction,
+                                              model_name="LSTM",
+                                              indent=2)
 
 
 if __name__ == '__main__':
