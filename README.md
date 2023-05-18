@@ -37,7 +37,7 @@ pip install -r requirements.txt
 ```
 
 ## How to run
-## 2.1 Data Exploration
+### 2.1 Data Exploration
 1. Start Jupyter Notebook by executing the following command in your terminal:
 ```bash
 jupyter notebook
@@ -45,7 +45,7 @@ jupyter notebook
 2. Your web browser should open with the Jupyter Notebook interface.
 3. Navigate to the project directory in the Jupyter Notebook interface and open the **Explore_Data_Task_Report.ipynb** file.
 
-## 2.2 Predictive Model
+### 2.2 Predictive Model
 1. Start Jupyter Notebook by executing the following command in your terminal:
 ```bash
 jupyter notebook
@@ -53,4 +53,16 @@ jupyter notebook
 2. Your web browser should open with the Jupyter Notebook interface.
 3. Navigate to the project directory in the Jupyter Notebook interface and open the **Predictive_Model_Task_Report.ipynb** file.
 
-
+## File Description
+The file description provides an overview of the purpose and functionality of each file within the source code of the 
+project.
+```commandline
+- data_generation.py: Runnable code to generate new data
+- data_helper.py: Storage of parameters, paths, and constants
+- data_preprocessing.py: Preprocessing functions for related data
+- demo_run_base_regressor_models.py: Execution of Machine Learning regression models 
+- demo_run_dl_model.py: Execution of Deep Learning model
+- lstm_model: Implementation of the LSTM model
+- output_writer.py: Structure and storage of the results
+- utils.py: Utility functions used throughout the project
+```
